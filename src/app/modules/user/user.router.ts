@@ -2,8 +2,8 @@ import express from 'express';
 import { ENUM_USER_ROLE } from '../../../enums/user';
 import auth from '../../middlewares/auth';
 import validateRequest from '../../middlewares/validateRequest';
-import { StudentController } from './student.controller';
-import { StudentValidation } from './student.validation';
+import { StudentController } from './user.controller';
+import { StudentValidation } from './user.validation';
 const router = express.Router();
 
 router.get('/', StudentController.getAllStudent);

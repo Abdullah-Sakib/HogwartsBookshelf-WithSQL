@@ -3,8 +3,8 @@ import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import { prisma } from '../../../shared/prisma';
-import { studentSearchableFields } from './student.constants';
-import { IStudentFilterRequest } from './student.interface';
+import { studentSearchableFields } from './user.constants';
+import { IStudentFilterRequest } from './user.interface';
 
 const createStudent = async (data: Student): Promise<Student> => {
   const result = await prisma.student.create({

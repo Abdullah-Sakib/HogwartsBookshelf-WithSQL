@@ -4,8 +4,8 @@ import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
 import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
-import { studentFilterableFields } from './student.constants';
-import { StudentService } from './student.service';
+import { studentFilterableFields } from './user.constants';
+import { StudentService } from './user.service';
 
 const createStudent: RequestHandler = catchAsync(async (req, res) => {
   const result = await StudentService.createStudent(req.body);
