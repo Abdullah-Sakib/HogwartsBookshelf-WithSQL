@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\WEB\\Level-2\\Milestone-6-SQL\\Hogwarts-Bookshelf-BE-Assignment-with-sql\\logs\\winston\\successes\\.b31d1af68720c2f0eaee56dc8ccbed1a9263e70f-audit.json",
+    "files": [
+        {
+            "date": 1693541442256,
+            "name": "D:\\WEB\\Level-2\\Milestone-6-SQL\\Hogwarts-Bookshelf-BE-Assignment-with-sql\\logs\\winston\\successes\\phu-2023-01-09-10-success.log",
+            "hash": "1c8637fe5683559ae0bb1330968d54d7d305a0fcfae193541b1abdbd052bccaa"
+        }
+    ],
+    "hashType": "sha256"
+}
