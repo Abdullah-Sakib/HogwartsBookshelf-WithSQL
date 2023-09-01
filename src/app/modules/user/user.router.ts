@@ -2,31 +2,20 @@ import express from 'express';
 import { ENUM_USER_ROLE } from '../../../enums/user';
 import auth from '../../middlewares/auth';
 import validateRequest from '../../middlewares/validateRequest';
-import { StudentController } from './user.controller';
+import { UserController } from './user.controller';
 import { StudentValidation } from './user.validation';
 const router = express.Router();
 
-router.get('/', StudentController.getAllStudent);
-router.get('/:id', StudentController.getUniqueStudentById);
-
-router.post(
-  '/',
-  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
-  validateRequest(StudentValidation.createStudentValidation),
-  StudentController.createStudent
-);
+router.get('/', auth(ENUM_USER_ROLE.ADMIN), UserController.getAllUser);
+router.get('/:id', auth(ENUM_USER_ROLE.ADMIN), UserController.getSingleUser);
 
 router.patch(
   '/:id',
-  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  auth(ENUM_USER_ROLE.ADMIN),
   validateRequest(StudentValidation.updateStudentValidation),
-  StudentController.updateStudent
+  UserController.updateUser
 );
 
-router.delete(
-  '/:id',
-  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
-  StudentController.deleteStudent
-);
+router.delete('/:id', auth(ENUM_USER_ROLE.ADMIN), UserController.deleteUser);
 
-export const StudentRouter = router;
+export const UserRouter = router;

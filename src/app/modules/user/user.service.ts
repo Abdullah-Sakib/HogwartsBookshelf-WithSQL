@@ -1,80 +1,14 @@
-import { Student } from '@prisma/client';
-import { paginationHelpers } from '../../../helpers/paginationHelper';
-import { IGenericResponse } from '../../../interfaces/common';
-import { IPaginationOptions } from '../../../interfaces/pagination';
+import { User } from '@prisma/client';
 import { prisma } from '../../../shared/prisma';
-import { studentSearchableFields } from './user.constants';
-import { IStudentFilterRequest } from './user.interface';
 
-const createStudent = async (data: Student): Promise<Student> => {
-  const result = await prisma.student.create({
-    data,
-  });
+const getAllUser = async (): Promise<User[]> => {
+  const result = await prisma.user.findMany({});
 
   return result;
 };
 
-const getAllStudent = async (
-  filters: IStudentFilterRequest,
-  options: IPaginationOptions
-): Promise<IGenericResponse<Student[]>> => {
-  const { page, limit, skip } = paginationHelpers.calculatePagination(options);
-
-  const { searchTerm, ...filterData } = filters;
-
-  const andConditions = [];
-
-  if (searchTerm) {
-    andConditions.push({
-      OR: studentSearchableFields.map(field => ({
-        [field]: {
-          contains: searchTerm,
-          mode: 'insensitive',
-        },
-      })),
-    });
-  }
-
-  if (Object.keys(filterData).length > 0) {
-    andConditions.push({
-      AND: Object.keys(filterData).map(key => ({
-        [key]: {
-          equals: (filterData as any)[key],
-        },
-      })),
-    });
-  }
-
-  const whereCondition = andConditions.length > 0 ? { AND: andConditions } : {};
-
-  const result = await prisma.student.findMany({
-    where: whereCondition,
-    skip,
-    take: limit,
-    orderBy:
-      options.sortBy && options.sortOrder
-        ? {
-            [options.sortBy]: options.sortOrder,
-          }
-        : {
-            createdAt: 'desc',
-          },
-  });
-
-  const total = await prisma.student.count();
-
-  return {
-    meta: {
-      page,
-      limit,
-      total,
-    },
-    data: result,
-  };
-};
-
-const getUniqueStudentById = async (id: string): Promise<Student | null> => {
-  const result = await prisma.student.findUnique({
+const getSingleUser = async (id: string): Promise<User | null> => {
+  const result = await prisma.user.findUnique({
     where: {
       id,
     },
@@ -83,44 +17,33 @@ const getUniqueStudentById = async (id: string): Promise<Student | null> => {
   return result;
 };
 
-const updateStudent = async (
+const updateUser = async (
   id: string,
-  payload: Partial<Student>
-): Promise<Student | null> => {
-  const result = await prisma.student.update({
+  payload: Partial<User>
+): Promise<User | null> => {
+  const result = await prisma.user.update({
     where: {
       id,
     },
     data: payload,
-    include: {
-      academicDepartment: true,
-      academicFaculty: true,
-      academicSemester: true,
-    },
   });
 
   return result;
 };
 
-const deleteStudent = async (id: string): Promise<Student | null> => {
-  const result = await prisma.student.delete({
+const deleteUser = async (id: string): Promise<User | null> => {
+  const result = await prisma.user.delete({
     where: {
       id,
     },
-    include: {
-      academicDepartment: true,
-      academicFaculty: true,
-      academicSemester: true,
-    },
   });
 
   return result;
 };
 
-export const StudentService = {
-  createStudent,
-  getAllStudent,
-  getUniqueStudentById,
-  updateStudent,
-  deleteStudent,
+export const UserService = {
+  getAllUser,
+  getSingleUser,
+  updateUser,
+  deleteUser,
 };

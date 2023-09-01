@@ -9,6 +9,11 @@
             "date": 1693541442289,
             "name": "D:\\WEB\\Level-2\\Milestone-6-SQL\\Hogwarts-Bookshelf-BE-Assignment-with-sql\\logs\\winston\\errors\\phu-2023-01-09-10-error.log",
             "hash": "e5ca8271910e55830394f238af26ee7b8cbd5f5d5824990903022b05d1b02237"
+        },
+        {
+            "date": 1693544531569,
+            "name": "D:\\WEB\\Level-2\\Milestone-6-SQL\\Hogwarts-Bookshelf-BE-Assignment-with-sql\\logs\\winston\\errors\\phu-2023-01-09-11-error.log",
+            "hash": "098a1abad468a3bbfa8353b61db4568daf3a6cc7ef29ee55ec1b64a100bb1138"
         }
     ],
     "hashType": "sha256"
