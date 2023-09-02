@@ -5,7 +5,7 @@ export type ISingleCategory = {
     author: string;
     price: number;
     genre: string;
-    publicationDate: Date;
+    publicationDate: string;
     categoryId: string;
     createdAt: Date;
     updatedAt: Date;
