@@ -44,6 +44,11 @@
             "date": 1693642220513,
             "name": "D:\\WEB\\Level-2\\Milestone-6-SQL\\Hogwarts-Bookshelf-BE-Assignment-with-sql\\logs\\winston\\successes\\phu-2023-02-09-14-success.log",
             "hash": "a6d73562337b182c845408d7efd4218c7d2fc545b1178b122fb7e28d3855948b"
+        },
+        {
+            "date": 1693661068304,
+            "name": "D:\\WEB\\Level-2\\Milestone-6-SQL\\Hogwarts-Bookshelf-BE-Assignment-with-sql\\logs\\winston\\successes\\phu-2023-02-09-19-success.log",
+            "hash": "b4513f191a82385b9770a82200418c3eb0f8dc874ae52ae3200441cee3503fd8"
         }
     ],
     "hashType": "sha256"

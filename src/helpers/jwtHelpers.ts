@@ -5,13 +5,9 @@ const createToken = (
   secret: Secret,
   expireTime: string
 ): string => {
-  return jwt.sign(
-    { ...payload, iat: Math.floor(Date.now() / 1000) - 31536000 },
-    secret,
-    {
-      expiresIn: expireTime,
-    }
-  );
+  return jwt.sign({ ...payload }, secret, {
+    expiresIn: expireTime,
+  });
 };
 
 const verifyToken = (token: string, secret: Secret): JwtPayload => {
