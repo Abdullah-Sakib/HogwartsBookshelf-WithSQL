@@ -4,7 +4,6 @@ import ApiError from '../../../errors/ApiError';
 import { prisma } from '../../../shared/prisma';
 
 const createOrder = async (data: Order, userId: string): Promise<Order> => {
-  console.log(userId, '😘😘');
   const result = await prisma.order.create({
     data: {
       ...data,
@@ -28,8 +27,6 @@ const getAllOrders = async (
       },
     });
   }
-
-  console.log(userId);
 
   if (role === 'admin') {
     result = await prisma.order.findMany({});
