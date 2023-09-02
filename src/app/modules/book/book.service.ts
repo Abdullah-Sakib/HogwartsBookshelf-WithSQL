@@ -89,15 +89,37 @@ const getAllBooks = async (
 };
 
 const getSingleCategoryBooks = async (
-  categoryId: string
-): Promise<Book[] | null> => {
+  categoryId: string,
+  options: IPaginationOptions
+): Promise<IGenericResponse<Book[] | null>> => {
+  const { page, size, skip } = paginationHelpers.calculatePagination(options);
+
   const result = await prisma.book.findMany({
     where: {
       categoryId,
     },
+    skip,
+    take: size,
+    orderBy:
+      options.sortBy && options.sortOrder
+        ? {
+            [options.sortBy]: options.sortOrder,
+          }
+        : {
+            createdAt: 'desc',
+          },
   });
 
-  return result;
+  const total = await prisma.book.count();
+
+  return {
+    meta: {
+      page,
+      size,
+      total,
+    },
+    data: result,
+  };
 };
 
 const getSingleBook = async (id: string): Promise<Book | null> => {

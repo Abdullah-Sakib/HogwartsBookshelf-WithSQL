@@ -6,15 +6,11 @@ import { BookController } from './book.controller';
 import { BookValidation } from './book.validation';
 const router = express.Router();
 
-router.get('/', auth(ENUM_USER_ROLE.ADMIN), BookController.getAllBooks);
+router.get('/', BookController.getAllBooks);
 
-router.get('/:id', auth(ENUM_USER_ROLE.ADMIN), BookController.getSingleBook);
+router.get('/:id', BookController.getSingleBook);
 
-router.get(
-  '/:categoryId/category',
-  auth(ENUM_USER_ROLE.ADMIN),
-  BookController.getSingleCategoryBooks
-);
+router.get('/:categoryId/category', BookController.getSingleCategoryBooks);
 
 router.post(
   '/create-book',

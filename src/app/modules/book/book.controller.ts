@@ -31,8 +31,10 @@ const getAllBooks: RequestHandler = catchAsync(async (req, res) => {
 });
 
 const getSingleCategoryBooks: RequestHandler = catchAsync(async (req, res) => {
+  const options = pick(req.query, ['size', 'page', 'sortBy', 'sortOrder']);
   const result = await BookService.getSingleCategoryBooks(
-    req.params.categoryId
+    req.params.categoryId,
+    options
   );
 
   sendResponse(res, {
