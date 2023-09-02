@@ -2,70 +2,51 @@ import { RequestHandler } from 'express';
 import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
-import { CategoryService } from './order.service';
+import { OrderService } from './order.service';
 
-const createCategory: RequestHandler = catchAsync(async (req, res) => {
-  const result = await CategoryService.createCategory(req.body);
-
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Category retrived successfully',
-    data: result,
-  });
-});
-
-const getAllCategories: RequestHandler = catchAsync(async (req, res) => {
-  const result = await CategoryService.getAllCategories();
+const createOrder: RequestHandler = catchAsync(async (req, res) => {
+  const user = req.user;
+  console.log(user, '✅✅');
+  const result = await OrderService.createOrder(req.body, user?.userId);
 
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: 'Categories retrived successfully',
+    message: 'Order created successfully',
     data: result,
   });
 });
 
-const getSingleCategory: RequestHandler = catchAsync(async (req, res) => {
-  const result = await CategoryService.getSingleCategory(req.params.id);
+const getAllOrders: RequestHandler = catchAsync(async (req, res) => {
+  const user = req.user;
+  const result = await OrderService.getAllOrders(user?.userId, user?.role);
 
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: 'Category retrived successfully',
+    message: 'Orders retrived successfully',
     data: result,
   });
 });
 
-const updateCategory: RequestHandler = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const payload = req.body;
-  const result = await CategoryService.updateCategory(id, payload);
+const getSingleOrder: RequestHandler = catchAsync(async (req, res) => {
+  const user = req.user;
+  const result = await OrderService.getSingleOrder(
+    req.params.orderId,
+    user?.userId,
+    user?.role
+  );
 
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: 'Category updated successfully',
+    message: 'Order retrived successfully',
     data: result,
   });
 });
 
-const deleteCategory: RequestHandler = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = await CategoryService.deleteCategory(id);
-
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Category deleted successfully',
-    data: result,
-  });
-});
-
-export const CategoryController = {
-  createCategory,
-  getAllCategories,
-  getSingleCategory,
-  updateCategory,
-  deleteCategory,
+export const OrderController = {
+  createOrder,
+  getAllOrders,
+  getSingleOrder,
 };

@@ -2,40 +2,27 @@ import express from 'express';
 import { ENUM_USER_ROLE } from '../../../enums/user';
 import auth from '../../middlewares/auth';
 import validateRequest from '../../middlewares/validateRequest';
-import { CategoryController } from './order.controller';
-import { CategoryValidation } from './order.validation';
+import { OrderController } from './order.controller';
+import { OrderValidation } from './order.validation';
 const router = express.Router();
 
 router.get(
   '/',
-  auth(ENUM_USER_ROLE.ADMIN),
-  CategoryController.getAllCategories
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
+  OrderController.getAllOrders
 );
 
 router.get(
-  '/:id',
-  auth(ENUM_USER_ROLE.ADMIN),
-  CategoryController.getSingleCategory
+  '/:orderId',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
+  OrderController.getSingleOrder
 );
 
 router.post(
-  '/create-category',
-  auth(ENUM_USER_ROLE.ADMIN),
-  validateRequest(CategoryValidation.createCategoryValidation),
-  CategoryController.createCategory
+  '/create-order',
+  auth(ENUM_USER_ROLE.CUSTOMER),
+  validateRequest(OrderValidation.create),
+  OrderController.createOrder
 );
 
-router.patch(
-  '/:id',
-  auth(ENUM_USER_ROLE.ADMIN),
-  validateRequest(CategoryValidation.updateCategoryValidation),
-  CategoryController.updateCategory
-);
-
-router.delete(
-  '/:id',
-  auth(ENUM_USER_ROLE.ADMIN),
-  CategoryController.deleteCategory
-);
-
-export const CategoryRouter = router;
+export const OrderRouter = router;

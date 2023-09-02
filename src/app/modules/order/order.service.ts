@@ -1,72 +1,68 @@
-import { Category } from '@prisma/client';
+import { Order, Prisma } from '@prisma/client';
+import httpStatus from 'http-status';
+import ApiError from '../../../errors/ApiError';
 import { prisma } from '../../../shared/prisma';
-import { ISingleCategory } from './order.interface';
 
-const createCategory = async (data: Category): Promise<Category> => {
-  const result = await prisma.category.create({
-    data,
+const createOrder = async (data: Order, userId: string): Promise<Order> => {
+  console.log(userId, '😘😘');
+  const result = await prisma.order.create({
+    data: {
+      ...data,
+      userId,
+      orderedBooks: data.orderedBooks as Prisma.InputJsonValue,
+    },
   });
 
   return result;
 };
 
-const getAllCategories = async (): Promise<Category[]> => {
-  const result = await prisma.category.findMany({});
+const getAllOrders = async (
+  userId: string,
+  role: string
+): Promise<Order[] | null> => {
+  let result = null;
+  if (role === 'customer') {
+    result = await prisma.order.findMany({
+      where: {
+        userId,
+      },
+    });
+  }
+
+  console.log(userId);
+
+  if (role === 'admin') {
+    result = await prisma.order.findMany({});
+  }
 
   return result;
 };
 
-const getSingleCategory = async (
-  id: string
-): Promise<ISingleCategory | null> => {
-  const result = await prisma.category.findUnique({
-    where: {
-      id,
-    },
-  });
-
-  const booksOfThisCategory = await prisma.book.findMany({
-    where: {
-      genre: result?.title,
-    },
-  });
-
-  const data = {
-    ...result,
-    books: booksOfThisCategory ?? [],
-  };
-
-  return data;
-};
-
-const updateCategory = async (
+const getSingleOrder = async (
   id: string,
-  payload: Partial<Category>
-): Promise<Category | null> => {
-  const result = await prisma.category.update({
-    where: {
-      id,
-    },
-    data: payload,
-  });
-
-  return result;
-};
-
-const deleteCategory = async (id: string): Promise<Category | null> => {
-  const result = await prisma.category.delete({
+  userId: string,
+  role: string
+): Promise<Order | null> => {
+  const result = await prisma.order.findUnique({
     where: {
       id,
     },
   });
 
+  if (role === 'customer') {
+    if (result?.userId !== userId) {
+      throw new ApiError(
+        httpStatus.FORBIDDEN,
+        'You are not allowed to access this data.'
+      );
+    }
+  }
+
   return result;
 };
 
-export const CategoryService = {
-  createCategory,
-  getAllCategories,
-  getSingleCategory,
-  updateCategory,
-  deleteCategory,
+export const OrderService = {
+  createOrder,
+  getAllOrders,
+  getSingleOrder,
 };

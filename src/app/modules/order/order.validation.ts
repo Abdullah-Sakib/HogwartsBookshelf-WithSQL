@@ -1,20 +1,23 @@
 import { z } from 'zod';
 
-const createCategoryValidation = z.object({
+const create = z.object({
   body: z.object({
-    title: z.string({
-      required_error: 'title is required',
-    }),
+    orderedBooks: z.array(
+      z.object({
+        bookId: z.string({
+          required_error: 'bookId is required',
+        }),
+        quantity: z.number({
+          required_error: 'quantity is required',
+        }),
+      }),
+      {
+        required_error: 'title is required',
+      }
+    ),
   }),
 });
 
-const updateCategoryValidation = z.object({
-  body: z.object({
-    title: z.string().optional(),
-  }),
-});
-
-export const CategoryValidation = {
-  createCategoryValidation,
-  updateCategoryValidation,
+export const OrderValidation = {
+  create,
 };
