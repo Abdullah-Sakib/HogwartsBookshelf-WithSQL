@@ -6,17 +6,9 @@ import { CategoryController } from './category.controller';
 import { CategoryValidation } from './category.validation';
 const router = express.Router();
 
-router.get(
-  '/',
-  auth(ENUM_USER_ROLE.ADMIN),
-  CategoryController.getAllCategories
-);
+router.get('/', CategoryController.getAllCategories);
 
-router.get(
-  '/:id',
-  auth(ENUM_USER_ROLE.ADMIN),
-  CategoryController.getSingleCategory
-);
+router.get('/:id', CategoryController.getSingleCategory);
 
 router.post(
   '/create-category',
