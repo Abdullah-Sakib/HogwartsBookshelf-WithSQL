@@ -23,8 +23,8 @@ const login: RequestHandler = catchAsync(async (req, res) => {
   sendResponse<ILoginUserResponse>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'user login successfully',
-    data: result,
+    message: 'user signin successfully',
+    token: result.token,
   });
 });
 

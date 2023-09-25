@@ -10,7 +10,7 @@ router.post(
   AuthController.SignUp
 );
 router.post(
-  '/login',
+  '/signin',
   validateRequest(AuthValidation.login),
   AuthController.login
 );
